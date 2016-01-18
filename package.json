@@ -1,0 +1,20 @@
+{
+	"name": "media-engine",
+	"version": "1.0.0",
+	"description": "",
+	"main": "media-engine.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://archive.voodoowarez.com/media-engine"
+	},
+	"author": "rektide de la faye",
+	"license": "X",
+	"dependencies": {
+		"babel": "^6.3.26",
+		"babel-core": "^6.3.26",
+		"lodash": "^4.0.0"
+	}
+}
