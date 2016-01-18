@@ -2,8 +2,9 @@
 	"name": "media-engine",
 	"version": "1.0.0",
 	"description": "",
-	"main": "media-engine.js",
+	"main": "build/article.js",
 	"scripts": {
+		"compile": "babel --plugins transform-es2015-modules-commonjs,transform-es2015-parameters,transform-es2015-destructuring article.js --out-dir build",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
@@ -14,7 +15,11 @@
 	"license": "X",
 	"dependencies": {
 		"babel": "^6.3.26",
+		"babel-cli": "^6.4.0",
 		"babel-core": "^6.3.26",
+		"babel-plugin-transform-es2015-destructuring": "^6.4.0",
+		"babel-plugin-transform-es2015-modules-commonjs": "^6.4.0",
+		"babel-plugin-transform-es2015-parameters": "^6.4.5",
 		"lodash": "^4.0.0"
 	}
 }
