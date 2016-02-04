@@ -1,7 +1,10 @@
 import * as t from "babel-types"
 import * as ModuleAst from "./module-ast"
+import * as _quasilon from "quasilon"
 
 import util from "util"
+
+var quasilon= _quasilon.default()
 
 export default function({ options }) {
 	//var t = options.types
@@ -24,15 +27,15 @@ export default function({ options }) {
 					returnIdentifiers.push(uid)
 				}
 
-				var
-				  modExp= t.memberExpression(t.identifier("module"), t.identifier("exports")),
-				  block= [t.returnStatement(t.arrayExpression(returnIdentifiers))],
-				  fn= t.functionExpression(null, [], t.blockStatement(block)),
-				  assign= t.assignmentExpression("=", modExp, fn),
-				  expr= t.expressionStatement(assign)
-				block.unshift.apply(block, path.node.body)
-				path.node.body= [expr]
 
+				var
+				  arr= t.arrayExpression(returnIdentifiers),
+				  val= quasilon`
+					module.exports= function(){
+						${path.node.body}
+						return ${arr}
+					}`
+				path.node.body= val.ast.program.body
 			}
 		}
 	}
