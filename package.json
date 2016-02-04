@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "build/article.js",
 	"scripts": {
-		"compile": "babel --plugins transform-es2015-modules-commonjs,transform-es2015-parameters,transform-es2015-destructuring article.js module-ast.js --out-dir build",
+		"compile": "babel --plugins transform-es2015-modules-commonjs,transform-es2015-parameters,transform-es2015-destructuring article.js --out-dir build",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {

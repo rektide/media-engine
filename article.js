@@ -1,5 +1,4 @@
 import * as t from "babel-types"
-import * as ModuleAst from "./module-ast"
 import * as _quasilon from "quasilon"
 
 import util from "util"
