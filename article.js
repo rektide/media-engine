@@ -25,12 +25,14 @@ export default function({ options }) {
 				}
 
 				var
-				  mod= ModuleAst.program.body,
-				  bod= mod[0].expression.right.body.body,
-				  ret= bod[bod.length-1],
-				  arr= t.arrayExpression(returnIdentifiers)
-				ret.argument= arr
-				path.node.body.push.apply(path.node.body, mod)
+				  modExp= t.memberExpression(t.identifier("module"), t.identifier("exports")),
+				  block= [t.returnStatement(t.arrayExpression(returnIdentifiers))],
+				  fn= t.functionExpression(null, [], t.blockStatement(block)),
+				  assign= t.assignmentExpression("=", modExp, fn),
+				  expr= t.expressionStatement(assign)
+				block.unshift.apply(block, path.node.body)
+				path.node.body= [expr]
+
 			}
 		}
 	}
