@@ -4,30 +4,34 @@ import * as promisify from 'es6-promisify'
 
 var glob= promisify(glob_)
 
-export function defaults(){
+export const defaults = function defaults(){
 	return {
-		engines: "MEDIA_ENGINES"
+		engines: "MEDIA_ENGINES",
 		context: _.defaults({}, process.env, {
-				"MEDIA_ENGINES": "${HOME}/.config/media-engine/views/*.js:${CWD}/views/*.js"
+			"MEDIA_ENGINES": "${HOME}/.config/media-engine/views/*.js:${CWD}/views/*.js"
 		})
 	}
 }
 
+defaults.default= defaults
+
 export default function Finder( opts){
 	opts= opts|| {}
-	_.defaultsDeep( opts, defaults())
-	var paths= opts.context[ opts.engines].split( /[^\]:/)
+	_.defaultsDeep( opts, defaults.default())
+	var paths= opts.context[ opts.engines].split( /:/)
 
 	var state= {}
 	var loaded= new Promise( function( resolve){
-		var loaded= paths.map(function( path){
+		var _loaded= paths.map(function( path){
 			var matches= glob( path)
-			if(!opts.oneshot){
+			if( !opts.oneshot){
 				
 			}
 			return matches
 		})
-		return Promise.all(loaded).then(function(){})
+		return Promise.all(_loaded).then(function(){
+			found
+		})
 	})
 
 	var map={
@@ -40,4 +44,11 @@ export default function Finder( opts){
 		}
 	}
 	return { map, loaded}
+}
+
+export const main= function main(){
+	var
+	  argv= arguments.length> 0? arguments: process.argv.splice(2)
+	for(var i in argv){
+	}
 }

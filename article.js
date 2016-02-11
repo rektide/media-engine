@@ -1,9 +1,21 @@
-import * as t from "babel-types"
-import * as _quasilon from "quasilon"
-
+import babel from "babel-core"
+import traverse from "babel-traverse"
+import babylon from "babylon"
+import quasilion from "quasilion"
 import util from "util"
 
-var quasilon= _quasilon.default()
+import * as _quasilon from "quasilon"
+
+
+export default function({ options}){
+	return {
+		visitor: {
+			Program(path){
+				
+			}
+		}
+	}
+}
 
 export default function({ options }) {
 	//var t = options.types
@@ -25,7 +37,6 @@ export default function({ options }) {
 					path.node.body[i]= declaration
 					returnIdentifiers.push(uid)
 				}
-
 
 				var
 				  arr= t.arrayExpression(returnIdentifiers),
