@@ -1,10 +1,11 @@
-import * as _ from 'lodash'
-import * as glob_ from 'glob'
-import * as promisify from 'es6-promisify'
+"use strict"
 
-var glob= promisify(glob_)
+var
+  _ = require("lodash"),
+  promisify = require("es6-promisify"),
+  glob = promisify(require("glob")),
 
-export const defaults = function defaults(){
+module.exports.defaults = function(){
 	return {
 		engines: "MEDIA_ENGINES",
 		context: _.defaults({}, process.env, {
@@ -13,7 +14,6 @@ export const defaults = function defaults(){
 	}
 }
 
-defaults.default= defaults
 
 export default function Finder( opts){
 	opts= opts|| {}

@@ -1,20 +1,22 @@
-import babel from "babel-core"
-import traverse from "babel-traverse"
-import babylon from "babylon"
-import quasilion from "quasilion"
-import util from "util"
+var
+  babel = require("babel-core"),
+  traverse = require("babel-traverse"),
+  babylon = require("babylon"),
+  quasilon = require("quasilon"),
+  util = require("util")
 
-import * as _quasilon from "quasilon"
 
 
-export default function({ options}){
-	return {
-		visitor: {
-			Program(path){
-				
+export default function( opts){
+	var finder= finder( opts)
+	return new Promise( function( resolve, reject){
+		return {
+			visitor: {
+				Program(path){
+				}
 			}
 		}
-	}
+	})
 }
 
 export default function({ options }) {
