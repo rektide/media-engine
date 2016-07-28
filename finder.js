@@ -6,7 +6,7 @@ const
   env2prop= require("env2prop"),
   glob= promisify(require("glob")),
   xdgBasedir= require("xdg-basedir"),
-  stringTemplate= require("string-template")
+  taggedParser= require("tagged-parser")
 
 
 const env = env2prop(process.env)
@@ -28,16 +28,16 @@ export default function Finder( opts){
 	opts= opts|| {}
 	_.defaultsDeep( opts, defaults)
 	const params= {
-		configDir: xdgBasedir.config,
+		config: xdgBasedir.config,
 		context: opts.context,
 		cwd: process.cwd()
 	}
 	const pathMatches= opts.mediaEngines.map(function( raw){
-		const interpolated= stringTemplate( raw, params)
+		const interpolated= taggedParser( raw)( params)
 		return glob( interpolated)
 	})
 	const paths= Promise.all( pathMatches).then( function(){
-		return _.concat.apply( _, arguments)
+		return _.concat.apply( _, arguments[0])
 	})
 	return paths
 }

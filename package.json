@@ -21,8 +21,12 @@
 		"babel-plugin-transform-es2015-destructuring": "^6.4.0",
 		"babel-plugin-transform-es2015-modules-commonjs": "^6.4.0",
 		"babel-plugin-transform-es2015-parameters": "^6.4.5",
+		"env2prop": "^2.0.2",
+		"es6-promisify": "^4.1.0",
 		"lodash": "^4.0.0",
-		"quasilon": "^1.0.1"
+		"quasilon": "^1.0.1",
+		"tagged-parser": "^2.0.0",
+		"xdg-basedir": "^2.0.0"
 	},
 	"babel": {
 		"plugins": [
