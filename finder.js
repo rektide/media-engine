@@ -1,54 +1,54 @@
 "use strict"
 
-var
-  _ = require("lodash"),
-  promisify = require("es6-promisify"),
-  glob = promisify(require("glob")),
+const promisify= require("es6-promisify")
+const
+  _= require("lodash"),
+  env2prop= require("env2prop"),
+  glob= promisify(require("glob")),
+  xdgBasedir= require("xdg-basedir"),
+  stringTemplate= require("string-template")
 
-module.exports.defaults = function(){
-	return {
-		engines: "MEDIA_ENGINES",
-		context: _.defaults({}, process.env, {
-			"MEDIA_ENGINES": "${HOME}/.config/media-engine/views/*.js:${CWD}/views/*.js"
-		})
-	}
+
+const env = env2prop(process.env)
+
+const defaultContext = env.mediaContext || "mediaengine"
+
+const envMediaEngines = env.mediaEngines && env.mediaEngines.length && env.mediaEngines.split(":")
+const defaultMediaEngines = envMediaEngines || [
+	"${config}/${context}/views/*.js",
+	"${cwd}/views/*.js"
+];
+
+export const defaults = {
+	context: defaultContext,
+	mediaEngines: defaultMediaEngines
 }
-
 
 export default function Finder( opts){
 	opts= opts|| {}
-	_.defaultsDeep( opts, defaults.default())
-	var paths= opts.context[ opts.engines].split( /:/)
-
-	var state= {}
-	var loaded= new Promise( function( resolve){
-		var _loaded= paths.map(function( path){
-			var matches= glob( path)
-			if( !opts.oneshot){
-				
-			}
-			return matches
-		})
-		return Promise.all(_loaded).then(function(){
-			found
-		})
-	})
-
-	var map={
-		get: function( key){
-			var current= state[ key]
-			if( current!== undefined){
-				return Promise.resolve( current)
-			}
-			return done.then( arguments.callee)
-		}
+	_.defaultsDeep( opts, defaults)
+	const params= {
+		configDir: xdgBasedir.config,
+		context: opts.context,
+		cwd: process.cwd()
 	}
-	return { map, loaded}
+	const pathMatches= opts.mediaEngines.map(function( raw){
+		const interpolated= stringTemplate( raw, params)
+		return glob( interpolated)
+	})
+	const paths= Promise.all( pathMatches).then( function(){
+		return _.concat.apply( _, arguments)
+	})
+	return paths
 }
 
 export const main= function main(){
-	var
-	  argv= arguments.length> 0? arguments: process.argv.splice(2)
-	for(var i in argv){
-	}
+	Finder().then(function( paths){
+		console.log( "paths:")
+		console.log( paths)
+	})
+}
+
+if(require.main === module){
+	main()
 }
